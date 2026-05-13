@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>147 by Bastian — Toallas premium para nadadores</title>
+<meta name="description" content="Toallas premium creadas en el agua. Microfibra de alto rendimiento. Diseños únicos para nadadores que viven el deporte con estilo.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ───────── Page-specific: Landing ───────── */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    color: var(--bone);
+    overflow: hidden;
+  }
+  .hero__bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 30%, rgba(74, 31, 110, 0.55) 0%, transparent 60%),
+      repeating-linear-gradient(
+        45deg,
+        rgba(232, 199, 136, 0.03) 0 8px,
+        rgba(232, 199, 136, 0.06) 8px 16px
+      ),
+      linear-gradient(180deg, #2B1640 0%, #1A0B26 55%, #160820 100%);
+    z-index: 0;
+  }
+  .hero__bg::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(22, 8, 32, 0) 40%, var(--ink) 100%);
+  }
+  .hero__bg-lbl {
+    position: absolute; bottom: 18px; left: 20px;
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.18em;
+    color: var(--bone-dim); text-transform: uppercase;
+    z-index: 1;
+  }
+  .hero__bg-corner {
+    position: absolute; top: 80px; right: 20px;
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em;
+    color: var(--bone-dim); text-transform: uppercase;
+    text-align: right;
+    z-index: 1;
+  }
+  .hero__crosshair {
+    position: absolute;
+    top: 40%; left: 50%;
+    width: 36px; height: 36px;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--bone-dim);
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .hero__crosshair::before, .hero__crosshair::after {
+    content: ""; position: absolute; background: var(--bone-dim);
+  }
+  .hero__crosshair::before { top: -10px; bottom: -10px; left: 50%; width: 1px; transform: translateX(-50%); }
+  .hero__crosshair::after { left: -10px; right: -10px; top: 50%; height: 1px; transform: translateY(-50%); }
+
+  .hero__inner {
+    position: relative; z-index: 2;
+    flex: 1;
+    display: flex; flex-direction: column;
+    padding: 0 var(--pg);
+    padding-bottom: 40px;
+  }
+  .hero__top { padding-top: 24px; }
+  .hero__mid { flex: 1; display: flex; align-items: flex-end; padding-bottom: 8px; }
+  .hero__title {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-stretch: 118%;
+    font-size: clamp(56px, 17vw, 84px);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    font-style: italic;
+  }
+  .hero__title span { display: block; }
+  .hero__title .agua {
+    color: var(--bone);
+    -webkit-text-stroke: 0;
+    position: relative;
+  }
+  .hero__title .creado {
+    color: transparent;
+    -webkit-text-stroke: 1.2px var(--bone);
+  }
+  .hero__title .en-el {
+    color: transparent;
+    -webkit-text-stroke: 1.2px var(--bone);
+  }
+
+  .hero__sub {
+    margin-top: 22px;
+    max-width: 28ch;
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: var(--bone-mute);
+  }
+  .hero__sub strong { color: var(--bone); font-weight: 600; }
+
+  .hero__ctas {
+    margin-top: 28px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .hero__bottom {
+    position: absolute; bottom: 16px; left: var(--pg); right: var(--pg);
+    display: flex; justify-content: space-between; align-items: flex-end;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .hero__scroll {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em;
+    color: var(--bone-mute); text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  }
+  .hero__scroll .line {
+    width: 1px; height: 26px;
+    background: linear-gradient(180deg, var(--bone) 0%, transparent 100%);
+  }
+  .hero__stat {
+    text-align: right;
+    font-family: var(--f-mono);
+    color: var(--bone-mute);
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .hero__stat b { color: var(--bone); font-weight: 500; }
+
+  /* Marquee separator */
+  /* (uses .marquee from styles.css) */
+
+  /* Collection cards */
+  .cols-intro {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .cols { display: grid; gap: 16px; }
+  .col-card {
+    position: relative;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    overflow: hidden;
+    background: var(--ink-2);
+  }
+  .col-card__media {
+    aspect-ratio: 4 / 5;
+    position: relative;
+  }
+  .col-card__badge {
+    position: absolute; top: 14px; right: 14px;
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em;
+    color: var(--bone); text-transform: uppercase;
+    background: rgba(22, 8, 32, 0.7);
+    border: 1px solid var(--line-strong);
+    padding: 6px 10px;
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+  }
+  .col-card__size {
+    position: absolute; top: 14px; left: 14px;
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em;
+    color: var(--bone-mute); text-transform: uppercase;
+  }
+  .col-card__title {
+    position: absolute; left: 14px; bottom: 14px;
+    font-family: var(--f-display); font-weight: 900; font-stretch: 118%;
+    font-size: 38px; line-height: 0.94; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: var(--bone);
+  }
+  .col-card__title .small { font-size: 16px; display: block; font-weight: 600; font-stretch: 100%; color: var(--bone-mute); letter-spacing: 0.04em; margin-top: 8px; }
+  .col-card__foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 14px;
+    border-top: 1px solid var(--line);
+  }
+  .col-card__price { font-family: var(--f-display); font-weight: 800; font-stretch: 110%; font-size: 22px; }
+  .col-card__price span { font-family: var(--f-mono); font-size: 10px; color: var(--bone-mute); letter-spacing: 0.12em; text-transform: uppercase; margin-right: 6px; }
+  .col-card__cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--f-mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--bone);
+  }
+  .col-card__cta svg { width: 14px; height: 14px; }
+
+  /* Stats row */
+  .stats-block { background: var(--bone); color: var(--ink); padding: 56px var(--pg); }
+  .stats-block__head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; }
+  .stats-block__head .h2 { color: var(--ink); max-width: 12ch; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 16px; }
+  .stat { border-top: 1px solid rgba(22, 8, 32, 0.18); padding-top: 16px; }
+  .stat__num { font-family: var(--f-display); font-weight: 900; font-stretch: 120%; font-size: 56px; line-height: 0.95; letter-spacing: -0.03em; color: var(--ink); }
+  .stat__num.sm { font-size: 36px; }
+  .stat__lbl { margin-top: 8px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(22, 8, 32, 0.6); }
+
+  /* Manifesto */
+  .manifesto { padding: 80px var(--pg); }
+  .manifesto p {
+    font-family: var(--f-display); font-weight: 600; font-stretch: 108%;
+    font-size: 26px; line-height: 1.18; letter-spacing: -0.012em;
+    text-wrap: pretty;
+  }
+  .manifesto p + p { margin-top: 24px; }
+  .manifesto p em { font-style: italic; color: var(--bone-mute); }
+  .manifesto p mark { background: transparent; color: var(--bone); border-bottom: 1px solid var(--bone); padding-bottom: 2px; }
+
+  /* Process / values */
+  .values { display: grid; gap: 28px; }
+  .value { display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .value:first-child { padding-top: 0; border-top: 0; }
+  .value__num { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--bone-mute); padding-top: 4px; }
+  .value h3 { font-family: var(--f-display); font-weight: 900; font-stretch: 115%; font-size: 22px; letter-spacing: -0.015em; text-transform: uppercase; margin-bottom: 8px; }
+  .value p { color: var(--bone-mute); font-size: 14.5px; line-height: 1.5; max-width: 36ch; }
+
+  /* Instagram grid */
+  .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .ig-cell { aspect-ratio: 1 / 1; position: relative; }
+  .ig-cell .ph__lbl { inset: auto 6px 6px 6px; font-size: 8px; }
+  .ig-cta {
+    margin-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 20px; border-top: 1px solid var(--line);
+  }
+
+  /* Newsletter */
+  .news {
+    background: var(--ink-2);
+    border-radius: var(--r);
+    padding: 36px 24px;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .news::before {
+    content: ""; position: absolute; top: -80px; right: -80px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, var(--plum) 0%, transparent 70%);
+    opacity: 0.4;
+  }
+  .news h2 { font-size: 28px; line-height: 0.96; max-width: 14ch; }
+  .news p { margin-top: 14px; color: var(--bone-mute); font-size: 14px; max-width: 32ch; }
+  .news__form { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+  .news__input {
+    height: 52px; padding: 0 18px;
+    background: var(--ink); color: var(--bone);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font: inherit; font-size: 14px;
+    outline: none;
+    width: 100%;
+  }
+  .news__input::placeholder { color: var(--bone-dim); }
+  .news__input:focus { border-color: var(--bone); }
+
+  /* Desktop tweak — keep mobile-first */
+  @media (min-width: 720px) {
+    :root { --pg: 56px; }
+    .hero__title { font-size: clamp(96px, 14vw, 160px); }
+    .hero__sub { font-size: 17px; max-width: 36ch; }
+    .hero__ctas { flex-direction: row; }
+    .cols { grid-template-columns: 1fr 1fr; }
+    .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    .values { grid-template-columns: 1fr 1fr; column-gap: 48px; }
+    .value { padding-top: 32px; }
+    .ig-grid { grid-template-columns: repeat(6, 1fr); }
+    .manifesto p { font-size: 40px; }
+    .news h2 { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ───────── NAV ───────── -->
+  <nav class="nav">
+    <a href="landing.html" class="mark-147">
+      147<span class="by">BY BASTIAN</span>
+    </a>
+    <div class="nav__right">
+      <a href="https://instagram.com/147_by_bastian" class="nav__ig" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        @147_by_bastian
+      </a>
+      <button class="nav__cart" aria-label="Menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ───────── HERO ───────── -->
+  <section class="hero" data-screen-label="Landing">
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__bg-lbl">[ FOTO HERO — NADADOR DE ESPALDAS EN BORDE DE PISCINA, AGARRANDO TOALLA 147 ]</div>
+      <div class="hero__bg-corner">
+        N° 147 / EDICIÓN 01<br>LIMA, PE — 2026
+      </div>
+      <div class="hero__crosshair"></div>
+    </div>
+
+    <div class="hero__inner">
+      <div class="hero__top">
+        <div class="eyebrow"><span class="dot pulse"></span>NUEVA COLECCIÓN 2026</div>
+      </div>
+
+      <div class="hero__mid">
+        <div>
+          <h1 class="hero__title">
+            <span class="creado">Creado</span>
+            <span class="en-el">en el</span>
+            <span class="agua">agua.</span>
+          </h1>
+
+          <p class="hero__sub">
+            <strong>Toallas premium en microfibra</strong> para nadadores que viven el deporte con disciplina, personalidad y estilo.
+          </p>
+
+          <div class="hero__ctas">
+            <a class="btn btn--wa" href="https://wa.me/51966429467?text=Hola%20147%2C%20quiero%20pedir%20una%20toalla" target="_blank">
+              <svg class="wa-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.81 11.81 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+              Pedir por WhatsApp
+            </a>
+            <a class="btn btn--ghost" href="#coleccion">
+              Ver colección
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__bottom">
+        <div class="hero__scroll">
+          <span>SCROLL</span>
+          <span class="line"></span>
+        </div>
+        <div class="hero__stat">
+          <b>MICROFIBRA 100%</b><br>SECADO RÁPIDO · ULTRA ABSORBENTE
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── MARQUEE SEPARATOR ───────── -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Creado en el agua</span>
+      <span>Microfibra premium</span>
+      <span>18+ diseños únicos</span>
+      <span>Hecho en Perú</span>
+      <span>Para nadadores reales</span>
+      <span>Creado en el agua</span>
+      <span>Microfibra premium</span>
+      <span>18+ diseños únicos</span>
+      <span>Hecho en Perú</span>
+      <span>Para nadadores reales</span>
+    </div>
+  </div>
+
+  <!-- ───────── COLLECTION ───────── -->
+  <section id="coleccion" class="section">
+    <div class="cols-intro">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>COLECCIÓN 01</div>
+        <h2 class="h1 mt-16">Elige<br>tu medida.</h2>
+      </div>
+      <div class="label" style="text-align:right; line-height:1.5;">02<br>OPCIONES</div>
+    </div>
+
+    <div class="cols">
+      <!-- Pequeñas -->
+      <a class="col-card" href="pequenas.html">
+        <div class="col-card__media ph">
+          <div class="ph__corner">01 / PEQUEÑA</div>
+          <span class="col-card__size">90 × 40 CM</span>
+          <span class="col-card__badge">7 DISEÑOS</span>
+          <div class="col-card__title">
+            Toallas<br>pequeñas
+            <span class="small">PARA ENTRENAR / SECAR / CARGAR</span>
+          </div>
+          <div class="ph__lbl">[ FLATLAY DE 3 TOALLAS PEQUEÑAS DOBLADAS, COLORES VARIADOS ]</div>
+        </div>
+        <div class="col-card__foot">
+          <div class="col-card__price"><span>DESDE</span>S/. 18</div>
+          <div class="col-card__cta">
+            Ver colección
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Grandes -->
+      <a class="col-card" href="grandes.html">
+        <div class="col-card__media ph ph--deep">
+          <div class="ph__corner">02 / GRANDE</div>
+          <span class="col-card__size">160 × 90 CM</span>
+          <span class="col-card__badge">11 DISEÑOS</span>
+          <div class="col-card__title">
+            Toallas<br>grandes
+            <span class="small">PARA PISCINA / PLAYA / VIAJE</span>
+          </div>
+          <div class="ph__lbl">[ FLATLAY DE 3 TOALLAS GRANDES EXTENDIDAS, ESCALA AMPLIA ]</div>
+        </div>
+        <div class="col-card__foot">
+          <div class="col-card__price"><span>DESDE</span>S/. 65</div>
+          <div class="col-card__cta">
+            Ver colección
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ───────── MANIFESTO ───────── -->
+  <section class="manifesto">
+    <div class="eyebrow"><span class="dot"></span>LA HISTORIA</div>
+    <div class="mt-24">
+      <p>147 nace desde <mark>años dentro del agua</mark>. Cada diseño representa disciplina, personalidad y la energía de quienes viven la natación más allá del deporte.</p>
+      <p><em>Creado en Perú, para entrenamientos largos, competencias frías y mañanas de cloro.</em></p>
+    </div>
+  </section>
+
+  <!-- ───────── STATS ───────── -->
+  <section class="stats-block">
+    <div class="stats-block__head">
+      <h2 class="h2">Hecho<br>con pasión.</h2>
+      <div class="label" style="text-align:right;">FICHA<br>TÉCNICA</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat__num">18<sup style="font-size:0.4em; vertical-align:top;">+</sup></div>
+        <div class="stat__lbl">Diseños únicos</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">100<span style="font-size:0.5em;">%</span></div>
+        <div class="stat__lbl">Microfibra premium</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num sm" style="padding-top: 14px;">PE</div>
+        <div class="stat__lbl">Diseñado en Lima</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num sm" style="padding-top: 14px;">24H</div>
+        <div class="stat__lbl">Envío Lima Metropolitana</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── VALUES / WHY ───────── -->
+  <section class="section">
+    <div class="eyebrow"><span class="dot"></span>POR QUÉ 147</div>
+    <h2 class="h1 mt-16" style="margin-bottom:40px;">Para nadadores,<br>por un nadador.</h2>
+
+    <div class="values">
+      <div class="value">
+        <div class="value__num">01</div>
+        <div>
+          <h3>Microfibra de alto rendimiento</h3>
+          <p>Absorbe hasta 4× su peso en agua y seca en minutos. No pesa en la mochila, no apesta entre entrenamientos.</p>
+        </div>
+      </div>
+      <div class="value">
+        <div class="value__num">02</div>
+        <div>
+          <h3>Diseños con personalidad</h3>
+          <p>Cada estampado nace de la cultura del agua. Nada genérico — todo pensado para el nadador que entrena duro y vive con estilo.</p>
+        </div>
+      </div>
+      <div class="value">
+        <div class="value__num">03</div>
+        <div>
+          <h3>Tamaños reales</h3>
+          <p>90×40 para el bolso de entreno. 160×90 para playa, piscina o secarte como se debe después de competir.</p>
+        </div>
+      </div>
+      <div class="value">
+        <div class="value__num">04</div>
+        <div>
+          <h3>Hecho en Perú</h3>
+          <p>Diseñado y producido localmente. Cuando lo pides por WhatsApp, hablas directo con la marca — no con un call center.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── INSTAGRAM ───────── -->
+  <section class="section section--tight">
+    <div class="row between" style="margin-bottom: 24px; align-items: flex-end;">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>EN EL FEED</div>
+        <h2 class="h2 mt-16">@147_by_bastian</h2>
+      </div>
+      <a href="https://instagram.com/147_by_bastian" target="_blank" class="label" style="display:flex; align-items:center; gap:6px;">
+        SEGUIR
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="12" height="12"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="ig-grid">
+      <div class="ig-cell ph"><span class="ph__lbl">NADADOR / BLOQUE</span></div>
+      <div class="ig-cell ph ph--deep"><span class="ph__lbl">FLATLAY</span></div>
+      <div class="ig-cell ph"><span class="ph__lbl">DETALLE TELA</span></div>
+      <div class="ig-cell ph ph--deep"><span class="ph__lbl">PISCINA</span></div>
+      <div class="ig-cell ph"><span class="ph__lbl">EQUIPO</span></div>
+      <div class="ig-cell ph ph--deep"><span class="ph__lbl">BTS</span></div>
+    </div>
+  </section>
+
+  <!-- ───────── NEWSLETTER ───────── -->
+  <section class="section">
+    <div class="news">
+      <div class="eyebrow"><span class="dot"></span>LISTA 147</div>
+      <h2 class="h1 mt-16">Drops antes<br>que nadie.</h2>
+      <p>Suscríbete y recibe acceso anticipado a nuevos diseños, descuentos para clubes y noticias desde la piscina.</p>
+      <form class="news__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ Suscrito';">
+        <input type="email" class="news__input" placeholder="tu@correo.com" required>
+        <button class="btn btn--bone" type="submit">Unirme a la lista</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ───────── FOOTER ───────── -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__col">
+        <a href="landing.html" class="mark-147" style="font-size:42px;">
+          147<span class="by">BY BASTIAN · CREADO EN EL AGUA</span>
+        </a>
+        <p class="mt-16 text-mute" style="max-width: 30ch; font-size: 14px;">
+          Toallas premium para nadadores que viven el deporte con estilo.
+        </p>
+      </div>
+      <div class="footer__col">
+        <h4>Colecciones</h4>
+        <ul>
+          <li><a href="pequenas.html">Toallas pequeñas · 90×40</a></li>
+          <li><a href="grandes.html">Toallas grandes · 160×90</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/51966429467" target="_blank">WhatsApp · 966 429 467</a></li>
+          <li><a href="https://instagram.com/147_by_bastian" target="_blank">Instagram · @147_by_bastian</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 147 BY BASTIAN</span>
+      <span>HECHO CON PASIÓN EN PE</span>
+    </div>
+  </footer>
+
+  <!-- Sticky WA -->
+  <a class="wa-fab" href="https://wa.me/51966429467?text=Hola%20147%2C%20quiero%20info" target="_blank">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.81 11.81 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+    Pedir
+  </a>
+
+</div>
+</body>
+</html>

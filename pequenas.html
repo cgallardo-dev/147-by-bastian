@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toallas Pequeñas · 147 by Bastian</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ───────── Page-specific: Collection ───────── */
+  .col-head {
+    position: relative;
+    padding: 24px var(--pg) 36px;
+    border-bottom: 1px solid var(--line);
+  }
+  .col-head__meta {
+    display: flex; flex-direction: column;
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .col-head__data {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    color: var(--bone-mute); text-transform: uppercase;
+    line-height: 1.7;
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .col-head__data > span { display: inline-flex; }
+  .col-head__data b { color: var(--bone); font-weight: 500; }
+  .col-head__title {
+    font-family: var(--f-display);
+    font-weight: 900; font-stretch: 118%;
+    font-size: clamp(48px, 14vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    font-style: italic;
+  }
+  .col-head__title .stroke {
+    color: transparent;
+    -webkit-text-stroke: 1.2px var(--bone);
+  }
+  .col-head__title span { display: block; }
+  .col-head__data-old { display: none; }
+  .col-head__intro {
+    margin-top: 36px;
+    max-width: 38ch;
+    color: var(--bone-mute);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .col-head__intro strong { color: var(--bone); font-weight: 600; }
+
+  /* Filter bar */
+  .filter {
+    display: flex; gap: 8px; overflow-x: auto;
+    padding: 18px var(--pg);
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none;
+    position: sticky; top: 67px; z-index: 40;
+    background: rgba(22, 8, 32, 0.85);
+    backdrop-filter: blur(20px);
+  }
+  .filter::-webkit-scrollbar { display: none; }
+  .filter__chip {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    color: var(--bone-mute); text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .filter__chip.is-active { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+  .filter__count { color: var(--bone-dim); margin-left: 6px; }
+
+  /* Product grid */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .pcard {
+    position: relative;
+    display: block;
+    padding: 16px 14px 20px;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+  .pcard:nth-child(2n) { border-right: 0; }
+  .pcard__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    margin-bottom: 14px;
+  }
+  .pcard__num {
+    position: absolute; top: 8px; left: 8px;
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em;
+    color: var(--bone-dim); text-transform: uppercase;
+    z-index: 2;
+  }
+  .pcard__tag {
+    position: absolute; top: 8px; right: 8px;
+    font-family: var(--f-mono); font-size: 8.5px; letter-spacing: 0.14em;
+    color: var(--bone); text-transform: uppercase;
+    background: rgba(22, 8, 32, 0.7);
+    border: 1px solid var(--line-strong);
+    padding: 4px 8px;
+    border-radius: 999px;
+    z-index: 2;
+  }
+  .pcard__tag--new { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+  .pcard__tag--low { color: #FF9A6B; border-color: rgba(255, 154, 107, 0.4); }
+  .pcard__name {
+    font-family: var(--f-display); font-weight: 900; font-stretch: 115%;
+    font-size: 18px; letter-spacing: -0.01em; text-transform: uppercase;
+    line-height: 0.95;
+  }
+  .pcard__desc {
+    margin-top: 6px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em;
+    color: var(--bone-mute); text-transform: uppercase;
+  }
+  .pcard__foot {
+    margin-top: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .pcard__price {
+    font-family: var(--f-display); font-weight: 800; font-stretch: 108%;
+    font-size: 17px;
+  }
+  .pcard__arrow {
+    width: 28px; height: 28px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pcard__arrow svg { width: 12px; height: 12px; }
+  .pcard__swatch {
+    position: absolute;
+    bottom: 8px; right: 8px;
+    display: flex; gap: 4px;
+    background: rgba(22, 8, 32, 0.75);
+    padding: 4px 6px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    z-index: 2;
+  }
+  .pcard__dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.2);
+  }
+
+  /* Bundle / CTA banner */
+  .bundle {
+    margin: 0 var(--pg) 56px;
+    padding: 28px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: linear-gradient(135deg, var(--ink-3) 0%, var(--ink-2) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .bundle::before {
+    content: ""; position: absolute; bottom: -60px; left: -60px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, var(--plum) 0%, transparent 70%);
+    opacity: 0.45;
+  }
+  .bundle h3 { font-family: var(--f-display); font-weight: 900; font-stretch: 115%; font-size: 26px; line-height: 0.92; text-transform: uppercase; letter-spacing: -0.015em; max-width: 14ch; }
+  .bundle p { margin-top: 12px; color: var(--bone-mute); font-size: 14px; max-width: 32ch; }
+
+  @media (min-width: 720px) {
+    :root { --pg: 56px; }
+    .col-head__title { font-size: clamp(72px, 11vw, 140px); }
+    .col-head__meta { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+    .col-head__data { flex-direction: column; gap: 0; text-align: right; }
+    .grid { grid-template-columns: repeat(4, 1fr); }
+    .pcard { border-right: 1px solid var(--line); }
+    .pcard:nth-child(2n) { border-right: 1px solid var(--line); }
+    .pcard:nth-child(4n) { border-right: 0; }
+    .filter { top: 65px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="nav">
+    <a href="landing.html" class="nav__back">
+      <span class="nav__back-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </span>
+      Volver
+    </a>
+    <a href="landing.html" class="mark-147" style="font-size:20px;">147</a>
+    <button class="nav__cart" aria-label="Menú">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </nav>
+
+  <!-- ───────── HEADER ───────── -->
+  <section class="col-head" data-screen-label="Colección Pequeñas">
+    <div class="eyebrow"><span class="dot pulse"></span>COLECCIÓN 01 · PEQUEÑAS</div>
+    <div class="col-head__meta">
+      <h1 class="col-head__title">
+        <span class="stroke">Toallas</span>
+        <span>pequeñas.</span>
+      </h1>
+      <div class="col-head__data">
+        <span><b>90 × 40 CM</b></span>
+        <span>7 DISEÑOS</span>
+        <span>DESDE S/. 18</span>
+        <span>MICROFIBRA 100%</span>
+      </div>
+    </div>
+    <p class="col-head__intro">
+      <strong>Tu compañera de entreno.</strong> Compacta, ultra absorbente, seca rápido y entra en cualquier mochila. Ideal para secar el rostro entre series, marcar tu carril o llevar a la competencia.
+    </p>
+  </section>
+
+  <!-- Filter bar -->
+  <div class="filter" role="tablist">
+    <div class="filter__chip is-active">Todos <span class="filter__count">7</span></div>
+    <div class="filter__chip">Nuevos</div>
+    <div class="filter__chip">Más vendidos</div>
+    <div class="filter__chip">Oscuros</div>
+    <div class="filter__chip">Claros</div>
+    <div class="filter__chip">Estampados</div>
+  </div>
+
+  <!-- ───────── GRID ───────── -->
+  <section class="grid" id="product-grid"></section>
+
+  <!-- ───────── BUNDLE ───────── -->
+  <div style="height: 56px;"></div>
+  <div class="bundle">
+    <div class="eyebrow"><span class="dot"></span>PACK CLUB</div>
+    <h3 class="mt-16">¿Eres entrenador o club?</h3>
+    <p>Descuentos por volumen para equipos de 6+ nadadores. Personaliza con el nombre del club o del nadador.</p>
+    <a class="btn btn--wa mt-24" href="https://wa.me/51966429467?text=Hola%20147%2C%20consulta%20por%20pack%20club" target="_blank">
+      <svg class="wa-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.81 11.81 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607z"/></svg>
+      Consultar por pack
+    </a>
+  </div>
+
+  <!-- ───────── FOOTER ───────── -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__col">
+        <a href="landing.html" class="mark-147" style="font-size:42px;">147<span class="by">BY BASTIAN · CREADO EN EL AGUA</span></a>
+      </div>
+      <div class="footer__col">
+        <h4>Colecciones</h4>
+        <ul>
+          <li><a href="pequenas.html">Toallas pequeñas · 90×40</a></li>
+          <li><a href="grandes.html">Toallas grandes · 160×90</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/51966429467" target="_blank">WhatsApp · 966 429 467</a></li>
+          <li><a href="https://instagram.com/147_by_bastian" target="_blank">Instagram · @147_by_bastian</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 147 BY BASTIAN</span>
+      <span>HECHO CON PASIÓN EN PE</span>
+    </div>
+  </footer>
+
+  <a class="wa-fab" href="https://wa.me/51966429467" target="_blank">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.81 11.81 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607z"/></svg>
+    Pedir
+  </a>
+
+</div>
+<script src="catalog.js"></script>
+<script>renderGrid('pequenas', 'product-grid');</script>
+</body>
+</html>
