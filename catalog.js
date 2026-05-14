@@ -297,10 +297,8 @@ function renderGrid(col, containerId) {
     var isDeep = p.bg === 'deep';
     var mediaCls = 'pcard__media ph' + (isDeep ? ' ph--deep' : isBone ? ' ph--bone' : '');
     var numStyle = isBone ? ' style="color:rgba(22,8,32,0.5);"' : '';
-    var swatchStyle = isBone ? ' style="background:rgba(22,8,32,0.08);border-color:rgba(22,8,32,0.15);"' : '';
-    var swatches = p.swatches.map(function(c) {
-      return '<span class="pcard__dot" style="background:' + c + ';"></span>';
-    }).join('');
+    var swatchStyle = '';
+    var swatches = '';
     var num = i < 9 ? ('N°0' + (i + 1)) : ('N°' + (i + 1));
     var href = p.stock > 0 ? _productLink(col, p.id) : '#';
 
@@ -310,7 +308,6 @@ function renderGrid(col, containerId) {
           '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" onerror="this.style.display=\'none\'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">' +
           '<span class="pcard__num"' + numStyle + '>' + num + '</span>' +
           tagHtml +
-          '<div class="pcard__swatch"' + swatchStyle + '>' + swatches + '</div>' +
         '</div>' +
         '<h3 class="pcard__name">' + p.name + '</h3>' +
         '<p class="pcard__desc">' + p.desc + '</p>' +
