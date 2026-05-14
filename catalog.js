@@ -5,7 +5,7 @@ var PHONE = '51966429467';
 
 var CATALOG = {
   pequenas: {
-    label: 'Pequeñas',
+    label: 'De Mano',
     size: '90 × 40 CM',
     dims: '90 × 40 cm',
     weight: '120 g',
@@ -106,7 +106,7 @@ var CATALOG = {
     ]
   },
   grandes: {
-    label: 'Grandes',
+    label: 'XL',
     size: '160 × 90 CM',
     dims: '160 × 90 cm',
     weight: '260 g',
@@ -335,7 +335,7 @@ function initProductPage() {
   if (!p) { p = collection.products[0]; }
 
   // Page title
-  document.title = p.name + ' · Toalla ' + (colKey === 'grandes' ? 'grande' : 'pequeña') + ' · 147 by Bastian';
+  document.title = p.name + ' · Toalla ' + (colKey === 'grandes' ? 'XL' : 'de Mano') + ' · 147 by Bastian';
 
   // Nav back
   var navBack = document.getElementById('prod-nav-back');
@@ -370,7 +370,7 @@ function initProductPage() {
   // Description
   var descEl = document.getElementById('prod-desc');
   if (descEl) {
-    var sizeLabel = colKey === 'grandes' ? 'Toalla grande premium en microfibra.' : 'Toalla pequeña premium en microfibra.';
+    var sizeLabel = colKey === 'grandes' ? 'Toalla XL premium en microfibra.' : 'Toalla de mano premium en microfibra.';
     descEl.innerHTML = '<strong>' + sizeLabel + '</strong> ' + p.detail;
   }
 
@@ -387,8 +387,8 @@ function initProductPage() {
     opt.classList.remove('is-active');
     var nameEl = opt.querySelector('.size-opt__name');
     if (!nameEl) return;
-    var isMatch = (colKey === 'grandes' && nameEl.textContent.trim() === 'Grande') ||
-                  (colKey === 'pequenas' && nameEl.textContent.trim() === 'Pequeña');
+    var isMatch = (colKey === 'grandes' && nameEl.textContent.trim() === 'XL') ||
+                  (colKey === 'pequenas' && nameEl.textContent.trim() === 'De mano');
     if (isMatch) opt.classList.add('is-active');
   });
 
