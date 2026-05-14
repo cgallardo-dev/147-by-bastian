@@ -381,12 +381,15 @@ function initProductPage() {
 
   // Size selector — mark correct option as active
   document.querySelectorAll('.size-opt').forEach(function(opt) {
-    opt.classList.remove('is-active');
     var nameEl = opt.querySelector('.size-opt__name');
     if (!nameEl) return;
     var isMatch = (colKey === 'grandes' && nameEl.textContent.trim() === 'XL') ||
                   (colKey === 'pequenas' && nameEl.textContent.trim() === 'De mano');
-    if (isMatch) opt.classList.add('is-active');
+    if (isMatch) {
+      opt.classList.add('is-active');
+    } else {
+      opt.style.display = 'none';
+    }
   });
 
   // Color swatches
